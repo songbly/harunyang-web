@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { catLetter, logoBlack, logoWhite } from "./assets";
+import { appstore, catLetter, logoBlack, logoWhite } from "./assets";
 import Link from "next/link";
 
 const Home = () => {
