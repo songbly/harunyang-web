@@ -29,6 +29,10 @@ import favicon from "./favicon-96x96.png";
 import appstore from "./appstore.svg";
 import playstore from "./playstore.svg";
 
+import appPreviewBackground from "./app_preview_background.png";
+import subPageTitleBackground from "./sub_page_title_background.png";
+import adCat from "./ad_main_cat.png";
+
 export {
   logoWhite,
   logoBlack,
@@ -55,4 +59,7 @@ export {
   favicon,
   appstore,
   playstore,
+  appPreviewBackground,
+  subPageTitleBackground,
+  adCat,
 };
