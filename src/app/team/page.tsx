@@ -12,9 +12,9 @@ import {
   team6,
   team7,
   team8,
-} from "../assets";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+} from "../../assets";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 
 const teams = [
   {

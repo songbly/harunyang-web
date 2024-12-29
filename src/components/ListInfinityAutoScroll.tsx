@@ -47,5 +47,4 @@ const ListInfinityAutoScroll = ({
   );
 };
 
-
 export { ListInfinityAutoScroll };

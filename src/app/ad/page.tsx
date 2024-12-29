@@ -2,9 +2,9 @@
 
 import styled from "styled-components";
 import Image from "next/image";
-import { adCat } from "../assets";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import { adCat } from "../../assets";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 
 const Ad = () => {
   return (

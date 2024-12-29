@@ -19,7 +19,7 @@ import {
   step2,
   step3,
   step4,
-} from "./assets";
+} from "../assets";
 import {
   ASISLetter,
   Review_1_1,
@@ -29,22 +29,22 @@ import {
   Review_2_2,
   Review_2_3,
   TOBELetter,
-} from "./assets/images";
+} from "../assets/images";
 
 import Link from "next/link";
 import styled from "styled-components";
-import StoreButton from "./components/StoreButton";
-import Bubble from "./components/Bubble";
-import Letter from "./components/Letter";
+import StoreButton from "../components/StoreButton";
+import Bubble from "../components/Bubble";
+import Letter from "../components/Letter";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import ProgressBar from "./components/ProgressBar";
-import Footer from "./components/Footer";
-import { ListInfinityAutoScroll } from "./components/ListInfinityAutoScroll";
+import ProgressBar from "../components/ProgressBar";
+import Footer from "../components/Footer";
+import { ListInfinityAutoScroll } from "../components/ListInfinityAutoScroll";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePathname } from "next/navigation";
-import Header from "./components/Header";
+import Header from "../components/Header";
 
 const stepContents = [
   {
