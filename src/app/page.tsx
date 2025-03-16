@@ -181,7 +181,7 @@ const Home = () => {
     >
       <Header currentTheme={headerTheme} />
       {/* @ts-ignore */}
-      <SectionWrap sectionTheme="light" preview={false}>
+      <SectionWrap $sectionTheme="light" $preview={false}>
         <Box width={0} height={100} />
         <MainText color={"#191919"}>고민이 많은 사람들을 위한</MainText>
         <MainText color={"#191919"}>대화형 일기 서비스</MainText>
@@ -196,7 +196,7 @@ const Home = () => {
         <Image src={catLetter} width={990} height={990} alt="블랙 로고" />
       </SectionWrap>
       {/* @ts-ignore */}
-      <SectionWrap sectionTheme="dark" preview={false}>
+      <SectionWrap $sectionTheme="dark" $preview={false}>
         <Box width={0} height={100} />
         <SubText color="#FF8D23">가볍게 털어놓고 위로 받는 일상</SubText>
         <MainText color={"#F5F5F5"}>
@@ -270,7 +270,7 @@ const Home = () => {
         <Box width={0} height={100} />
       </SectionWrap>
       {/* @ts-ignore */}
-      <SectionWrap sectionTheme="light" preview={false}>
+      <SectionWrap $sectionTheme="light" $preview={false}>
         <Box width={0} height={100} />
         <SubText color="#FF8D23">하루냥 미리 경험해보기</SubText>
         {sent ? (
@@ -315,7 +315,7 @@ const Home = () => {
         <Box width={0} height={isMobile ? 32 : 100} />
       </SectionWrap>
       {/* @ts-ignore */}
-      <SectionWrap sectionTheme="dark" preview={true}>
+      <SectionWrap $sectionTheme="dark" $preview={true}>
         {!isMobile && <Box width={0} height={100} />}
 
         <BackgroundImage
@@ -343,7 +343,7 @@ const Home = () => {
         <Box width={0} height={100} />
       </SectionWrap>
       {/* @ts-ignore */}
-      <SectionWrap sectionTheme="dark" preview={false}>
+      <SectionWrap $sectionTheme="dark" $preview={false}>
         <Box width={0} height={100} />
         <SubText color="#FF8D23">사용 리뷰</SubText>
         <MainText color={"#F5F5F5"}>이미 $$명이 하루냥과</MainText>
@@ -408,7 +408,7 @@ const Home = () => {
         <Box width={0} height={100} />
       </SectionWrap>
       {/* @ts-ignore */}
-      <SectionWrap sectionTheme="light" preview={false} as any>
+      <SectionWrap $sectionTheme="light" $preview={false}>
         <Box width={0} height={100} />
         <MainText color={"#191919"}>우리 곧 만나요!</MainText>
         <MainText color={"#191919"}>기다리고 있을게요</MainText>
@@ -457,23 +457,23 @@ const Box = styled.div<{ width: number; height: number }>`
 `;
 
 interface SectionWrapProps extends React.HTMLAttributes<HTMLDivElement> {
-  sectionTheme: "light" | "dark";
-  preview: boolean;
+  $sectionTheme: "light" | "dark";
+  $preview: boolean;
 }
 
 // @ts-ignore
 const SectionWrap = styled.div.attrs<SectionWrapProps>((props) => ({
-  "data-theme": props.sectionTheme,
+  "data-theme": props.$sectionTheme,
 }))<SectionWrapProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   background-color: ${(props) =>
-    props.sectionTheme === "light" ? "#FFF" : "#191919"};
+    props.$sectionTheme === "light" ? "#FFF" : "#191919"};
 
   ${(props) =>
-    props.preview &&
+    props.$preview &&
     css`
       position: relative;
       @media (max-width: 768px) {
