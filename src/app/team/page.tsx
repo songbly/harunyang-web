@@ -1,7 +1,8 @@
 "use client";
 
-import styled from "styled-components";
+import useWindowSize from "@/hooks/useWindowSize";
 import Image from "next/image";
+import styled from "styled-components";
 import {
   subPageTitleBackground,
   team1,
@@ -15,7 +16,6 @@ import {
 } from "../../assets";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import useWindowSize from "@/hooks/useWindowSize";
 
 const teams = [
   {
@@ -67,7 +67,7 @@ const Team = () => {
         id="header"
         className={"flex justify-center py-3 border-b border-gray-300"}
       >
-        <Header />
+        <Header currentTheme="light" />
       </div>
       <TeamHeader className="relative w-full h-[400px]">
         <div className="absolute top-[80px] left-[50%] translate-x-[-50%]">
@@ -108,13 +108,6 @@ const Team = () => {
 };
 
 export default Team;
-
-const TitleWrap = styled.div`
-  position: absolute;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-`;
 
 const Title = styled.h1`
   position: absolute;

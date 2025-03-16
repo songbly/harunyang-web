@@ -1,7 +1,7 @@
 "use client";
 
-import styled from "styled-components";
 import Image from "next/image";
+import styled from "styled-components";
 import { adCat } from "../../assets";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -13,7 +13,7 @@ const Ad = () => {
         id="header"
         className={"flex justify-center py-3 border-b border-gray-300"}
       >
-        <Header />
+        <Header currentTheme="light" />
       </div>
       <div className="relative w-full">
         <Title>
