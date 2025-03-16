@@ -33,6 +33,12 @@ import appPreviewBackground from "./app_preview_background.png";
 import subPageTitleBackground from "./sub_page_title_background.png";
 import adCat from "./ad_main_cat.png";
 
+import harunyangCatLogo from "./harunyang-cat-logo.svg";
+import harunyangCatLogoBlack from "./harunyang-logo-black.svg";
+import harunyangCatLogoWhite from "./harunyang-logo-white.svg";
+import hamburgerWhite from "./hamburger-white.svg";
+import hamburgerBlack from "./hamburger-black.svg";
+
 export {
   logoWhite,
   logoBlack,
@@ -62,4 +68,9 @@ export {
   appPreviewBackground,
   subPageTitleBackground,
   adCat,
+  harunyangCatLogo,
+  harunyangCatLogoBlack,
+  harunyangCatLogoWhite,
+  hamburgerWhite,
+  hamburgerBlack,
 };

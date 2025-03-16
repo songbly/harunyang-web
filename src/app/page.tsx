@@ -12,8 +12,6 @@ import {
   catSkyblueBgBlack,
   catYellow,
   catYellowBgBlack,
-  logoBlack,
-  logoWhite,
   playstore,
   step1,
   step2,
@@ -22,6 +20,8 @@ import {
 } from "../assets";
 import {
   ASISLetter,
+  MobileAsIsLetter,
+  MobileToBeLetter,
   Review_1_1,
   Review_1_2,
   Review_1_3,
@@ -31,20 +31,17 @@ import {
   TOBELetter,
 } from "../assets/images";
 
-import Link from "next/link";
-import styled from "styled-components";
-import StoreButton from "../components/StoreButton";
-import Bubble from "../components/Bubble";
-import Letter from "../components/Letter";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import ProgressBar from "../components/ProgressBar";
-import Footer from "../components/Footer";
-import { ListInfinityAutoScroll } from "../components/ListInfinityAutoScroll";
 import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import styled, { css } from "styled-components";
+import Bubble from "../components/Bubble";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { ListInfinityAutoScroll } from "../components/ListInfinityAutoScroll";
+import ProgressBar from "../components/ProgressBar";
+import StoreButton from "../components/StoreButton";
+import useWindowSize from "@/hooks/useWindowSize";
 
 const stepContents = [
   {
@@ -72,9 +69,33 @@ const stepContents = [
 gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
-  const pathname = usePathname();
   const [sent, setSent] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { isMobile } = useWindowSize();
+
+  const [headerTheme, setHeaderTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    // 모든 섹션을 찾아서 data-theme 읽기
+    const allSections = document.querySelectorAll("[data-theme]");
+    allSections.forEach((section) => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top center", // 섹션의 어느 지점에서 테마를 바꿀지
+        onEnter: () => {
+          const theme = section.getAttribute("data-theme") as "light" | "dark";
+          setHeaderTheme(theme);
+        },
+        onEnterBack: () => {
+          const theme = section.getAttribute("data-theme") as "light" | "dark";
+          setHeaderTheme(theme);
+        },
+      });
+    });
+
+    // 혹시 레이아웃이 꼬이는 경우 수동 refresh
+    ScrollTrigger.refresh();
+  }, []);
 
   const handleStepClick = (index: number) => {
     setCurrentIndex(index);
@@ -156,16 +177,13 @@ const Home = () => {
   }, []);
 
   return (
-    <div id="service" className="w-full items-center overflow-hidden">
-      <div
-        id="header"
-        className={
-          "flex flex-col overflow-x-clip justify-center py-3 border-b border-gray-300"
-        }
-      >
-        <Header />
-      </div>
-      <Hero className="h-dvh">
+    <div
+      id="service"
+      className="w-full flex flex-col items-center overflow-hidden"
+    >
+      <Header currentTheme={headerTheme} />
+      <Section theme="light">
+        <Box width={0} height={100} />
         <MainText color={"#191919"}>고민이 많은 사람들을 위한</MainText>
         <MainText color={"#191919"}>대화형 일기 서비스</MainText>
         <SubText color="#828282">
@@ -177,11 +195,14 @@ const Home = () => {
           <StoreButton logo={playstore} text={"Google Play"} />
         </ButtonWrapper>
         <Image src={catLetter} width={990} height={990} alt="블랙 로고" />
-      </Hero>
-      <Consolation>
+      </Section>
+      <Section theme="dark">
+        <Box width={0} height={100} />
         <SubText color="#FF8D23">가볍게 털어놓고 위로 받는 일상</SubText>
         <MainText color={"#F5F5F5"}>
-          이야기하듯 일기를 쓰고 위로받고 싶다면?
+          {isMobile
+            ? `이야기하듯 일기를 쓰고\n 위로받고 싶다면?`
+            : "이야기하듯 일기를 쓰고 위로받고 싶다면?"}
         </MainText>
         <MainText color="#F5F5F5">하루냥과 함께해보세요!</MainText>
 
@@ -189,8 +210,8 @@ const Home = () => {
           <RowFlex flexStart="left">
             <Image
               src={catYellowBgBlack}
-              width={100}
-              height={100}
+              width={isMobile ? 48 : 100}
+              height={isMobile ? 48 : 100}
               alt="노랑 하루냥"
             />
             <Bubble
@@ -203,6 +224,14 @@ const Home = () => {
             />
           </RowFlex>
           <RowFlex flexStart="right">
+            {isMobile && (
+              <Image
+                src={catSkyblueBgBlack}
+                width={isMobile ? 48 : 100}
+                height={isMobile ? 48 : 100}
+                alt="파랑 하루냥"
+              />
+            )}
             <Bubble
               author="위로"
               text="오늘은 힘들었겠죠. 그래도 내일은 더 나은 날이 올 거예요."
@@ -212,18 +241,20 @@ const Home = () => {
               authorColor="#657DA1"
               tailPosition="right"
             />
-            <Image
-              src={catSkyblueBgBlack}
-              width={100}
-              height={100}
-              alt="파랑 하루냥"
-            />
+            {!isMobile && (
+              <Image
+                src={catSkyblueBgBlack}
+                width={100}
+                height={100}
+                alt="파랑 하루냥"
+              />
+            )}
           </RowFlex>
           <RowFlex flexStart="left">
             <Image
               src={catRedBgBlack}
-              width={100}
-              height={100}
+              width={isMobile ? 48 : 100}
+              height={isMobile ? 48 : 100}
               alt="빨깅 하루냥"
             />
             <Bubble
@@ -236,8 +267,10 @@ const Home = () => {
             />
           </RowFlex>
         </ContentWrapper>
-      </Consolation>
-      <Preview>
+        <Box width={0} height={100} />
+      </Section>
+      <Section theme="light">
+        <Box width={0} height={100} />
         <SubText color="#FF8D23">하루냥 미리 경험해보기</SubText>
         {sent ? (
           <>
@@ -248,7 +281,7 @@ const Home = () => {
           <>
             <MainText color={"#191919"}>하루냥과 미리 만나보세요!</MainText>
             <MainText color="#191919">
-              하루냥에게 일기를 쓰고 답장을 받아보세요
+              {!isMobile && "하루냥에게 "}일기를 쓰고 답장을 받아보세요
             </MainText>
           </>
         )}
@@ -256,11 +289,21 @@ const Home = () => {
         <LetterContainer>
           {sent ? (
             <div>
-              <Image src={TOBELetter} alt={""} width={466} height={440} />
+              <Image
+                src={isMobile ? MobileAsIsLetter : TOBELetter}
+                alt={""}
+                width={466}
+                height={440}
+              />
             </div>
           ) : (
             <div className={"relative"}>
-              <Image src={ASISLetter} alt={""} width={480} height={440} />
+              <Image
+                src={isMobile ? MobileToBeLetter : ASISLetter}
+                alt={""}
+                width={480}
+                height={440}
+              />
               <div
                 className="absolute bottom-[48px] w-[400px] h-[52px] z-10 cursor-pointer"
                 onClick={() => setSent(!sent)}
@@ -268,9 +311,12 @@ const Home = () => {
             </div>
           )}
         </LetterContainer>
-      </Preview>
+        <Box width={0} height={isMobile ? 32 : 100} />
+      </Section>
 
-      <AppPreview>
+      <Section theme="dark" preview={true}>
+        {!isMobile && <Box width={0} height={100} />}
+
         <BackgroundImage
           src={appPreviewBackground}
           width={990}
@@ -293,8 +339,10 @@ const Home = () => {
             <StepText>{stepContents[currentIndex].text}</StepText>
           </StepContent>
         </StepBox>
-      </AppPreview>
-      <Reviews>
+        <Box width={0} height={100} />
+      </Section>
+      <Section theme="dark">
+        <Box width={0} height={100} />
         <SubText color="#FF8D23">사용 리뷰</SubText>
         <MainText color={"#F5F5F5"}>이미 $$명이 하루냥과</MainText>
         <MainText color={"#F5F5F5"}>일상을 함께 하고 있어요</MainText>
@@ -302,25 +350,63 @@ const Home = () => {
           <div className="absolute w-full h-full z-10 bg-[linear-gradient(90deg,_#191919_0%,_#19191900_10%_90%,_#191919_100%)] pointer-events-none" />
           <ListInfinityAutoScroll
             items={[
-              <Image src={Review_1_1} alt={""} width={2280} height={240} />,
-              <Image src={Review_1_2} alt={""} width={2280} height={240} />,
-              <Image src={Review_1_3} alt={""} width={2280} height={240} />,
+              <Image
+                key="Review_1_1"
+                src={Review_1_1}
+                alt={""}
+                width={2280}
+                height={isMobile ? 120 : 240}
+              />,
+              <Image
+                key="Review_1_2"
+                src={Review_1_2}
+                alt={""}
+                width={2280}
+                height={isMobile ? 120 : 240}
+              />,
+              <Image
+                key="Review_1_3"
+                src={Review_1_3}
+                alt={""}
+                width={2280}
+                height={isMobile ? 120 : 240}
+              />,
             ]}
             speed={80000}
             itemClassName="w-max sm:h-[240px] shrink-0 xl:pr-12 sm:pr-6 pr-4 box-content flex items-center justify-center"
           />
           <ListInfinityAutoScroll
             items={[
-              <Image src={Review_2_1} alt={""} width={2280} height={240} />,
-              <Image src={Review_2_2} alt={""} width={2280} height={240} />,
-              <Image src={Review_2_3} alt={""} width={2280} height={240} />,
+              <Image
+                key="Review_2_1"
+                src={Review_2_1}
+                alt={""}
+                width={2280}
+                height={isMobile ? 120 : 240}
+              />,
+              <Image
+                key="Review_2_2"
+                src={Review_2_2}
+                alt={""}
+                width={2280}
+                height={isMobile ? 120 : 240}
+              />,
+              <Image
+                key="Review_2_3"
+                src={Review_2_3}
+                alt={""}
+                width={2280}
+                height={isMobile ? 120 : 240}
+              />,
             ]}
             speed={80000}
             itemClassName="w-max sm:h-[240px] shrink-0 xl:pr-12 sm:pr-6 pr-4 box-content flex items-center justify-center translate-x-60"
           />
         </div>
-      </Reviews>
-      <Final>
+        <Box width={0} height={100} />
+      </Section>
+      <Section theme="light">
+        <Box width={0} height={100} />
         <MainText color={"#191919"}>우리 곧 만나요!</MainText>
         <MainText color={"#191919"}>기다리고 있을게요</MainText>
         <ButtonWrapper>
@@ -328,12 +414,33 @@ const Home = () => {
           <StoreButton logo={playstore} text={"Google Play"} />
         </ButtonWrapper>
         <RowFlexMax>
-          <Image src={catYellow} width={320} height={320} alt="노랑 고양이" />
-          <Image src={catRed} width={320} height={320} alt="빨강 고양이" />
-          <Image src={catSkyblue} width={320} height={320} alt="하늘 고양이" />
-          <Image src={catGreen} width={320} height={320} alt="초록 고양이" />
+          <Image
+            src={catYellow}
+            width={isMobile ? 120 : 320}
+            height={isMobile ? 120 : 320}
+            alt="노랑 고양이"
+          />
+          <Image
+            src={catRed}
+            width={isMobile ? 120 : 320}
+            height={isMobile ? 120 : 320}
+            alt="빨강 고양이"
+          />
+          <Image
+            src={catSkyblue}
+            width={isMobile ? 120 : 320}
+            height={isMobile ? 120 : 320}
+            alt="하늘 고양이"
+          />
+          <Image
+            src={catGreen}
+            width={isMobile ? 120 : 320}
+            height={isMobile ? 120 : 320}
+            alt="초록 고양이"
+          />
         </RowFlexMax>
-      </Final>
+        <Box width={0} height={100} />
+      </Section>
       <Footer />
     </div>
   );
@@ -341,14 +448,32 @@ const Home = () => {
 
 export default Home;
 
-const Hero = styled.div`
+export const Box = styled.div<{ width: number; height: number }>`
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.height}px;
+`;
+
+const Section = styled.div.attrs<{
+  theme: "light" | "dark";
+  preview?: boolean;
+}>((props) => ({
+  "data-theme": props.theme,
+}))<{ theme: "light" | "dark"; preview?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: calc(100vh - 80px);
-  padding: 100px 0;
-  margin-top: 80px;
+  width: 100%;
+  background-color: ${(props) =>
+    props.theme === "light" ? "#FFF" : "#191919"};
+
+  ${(props) =>
+    props.preview &&
+    css`
+      position: relative;
+      @media (max-width: 768px) {
+        height: 1200px;
+      }
+    `}
 `;
 
 const MainText = styled.p<{ color: string }>`
@@ -356,13 +481,25 @@ const MainText = styled.p<{ color: string }>`
   font-weight: 700;
   line-height: 67.2px;
   color: ${(props) => props.color};
+  white-space: pre-wrap;
+  @media (max-width: 768px) {
+    font-size: 28px;
+    line-height: 1.4;
+    text-align: center;
+  }
 `;
 
 const SubText = styled.p`
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   margin-top: 8px;
   color: ${(props) => props.color};
+  @media (max-width: 768px) {
+    max-width: 216px;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -372,15 +509,9 @@ const ButtonWrapper = styled.div`
   justify-content: space-between;
   max-width: 356px;
   width: 100%;
-`;
-
-const Consolation = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 100px 0;
-  background-color: #191919;
+  @media (max-width: 768px) {
+    max-width: 288px;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -388,6 +519,10 @@ const ContentWrapper = styled.div`
   flex-direction: column;
   gap: 32px;
   margin-top: 132px;
+  @media (max-width: 768px) {
+    gap: 8px;
+    margin-top: 60px;
+  }
 `;
 
 const RowFlex = styled.div<{ flexStart: string }>`
@@ -398,6 +533,14 @@ const RowFlex = styled.div<{ flexStart: string }>`
     props.flexStart === "left" ? "flex-start" : "flex-end"};
   max-width: 1069px;
   width: 100%;
+  @media (max-width: 768px) {
+    width: 90%;
+    padding: 16px;
+    margin: 0 auto;
+    background-color: #292929;
+    border-radius: 12px;
+    gap: 12px;
+  }
 `;
 
 const RowFlexMax = styled.div`
@@ -407,28 +550,19 @@ const RowFlexMax = styled.div`
   justify-content: center;
   max-width: 1440px;
   width: 100%;
-`;
-
-const Preview = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 100px 0;
+  @media (max-width: 768px) {
+    margin-top: 60px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
 `;
 
 const LetterContainer = styled.div`
   margin: 132px 0;
-`;
-
-const AppPreview = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 100px 0;
-  background-color: #191919;
+  @media (max-width: 768px) {
+    margin: 60px 0;
+    padding: 20px;
+  }
 `;
 
 const BackgroundImage = styled(Image)`
@@ -436,6 +570,12 @@ const BackgroundImage = styled(Image)`
   width: 1000px;
   height: 1000px;
   object-fit: cover;
+  @media (max-width: 768px) {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    top: 150%;
+  }
 `;
 
 const StepBox = styled.div`
@@ -443,6 +583,15 @@ const StepBox = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
+    padding: 20px;
+  }
 `;
 
 const StepContent = styled.div`
@@ -451,12 +600,24 @@ const StepContent = styled.div`
   right: -400px;
   max-width: 400px;
   width: 100%;
+  @media (max-width: 768px) {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    right: 0;
+  }
 `;
 
 const StepTitle = styled.p`
   font-size: 20px;
   font-weight: 600;
   color: #ff8d23;
+  @media (max-width: 768px) {
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+  }
 `;
 
 const StepText = styled.p`
@@ -464,24 +625,11 @@ const StepText = styled.p`
   font-weight: 400;
   color: #f5f5f5;
   margin-top: 12px;
-`;
-
-const Final = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  height: calc(100vh - 80px);
-  padding: 100px 0;
-`;
-
-const Reviews = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 100px 0;
-  background-color: #191919;
+  @media (max-width: 768px) {
+    font-size: 16px;
+    width: 100%;
+    max-width: 218px;
+    text-align: center;
+    margin-bottom: 60px;
+  }
 `;

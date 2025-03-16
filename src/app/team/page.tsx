@@ -15,6 +15,7 @@ import {
 } from "../../assets";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import useWindowSize from "@/hooks/useWindowSize";
 
 const teams = [
   {
@@ -59,6 +60,7 @@ const teams = [
   },
 ];
 const Team = () => {
+  const { isMobile } = useWindowSize();
   return (
     <div id="team" className="w-full h-full items-center overflow-hidden">
       <div
@@ -67,7 +69,7 @@ const Team = () => {
       >
         <Header />
       </div>
-      <div className="relative w-full h-[400px]">
+      <TeamHeader className="relative w-full h-[400px]">
         <div className="absolute top-[80px] left-[50%] translate-x-[-50%]">
           <Image
             src={subPageTitleBackground}
@@ -80,22 +82,22 @@ const Team = () => {
             <p>하루냥을 키우는 집사들</p>
           </Title>
         </div>
-      </div>
+      </TeamHeader>
       <div className="relative flex w-full justify-center">
         <div className="flex flex-wrap justify-center max-w-[965px] gap-20 mb-80">
           {teams.map((member) => (
-            <div key={member.name} style={{ textAlign: "center" }}>
+            <Box key={member.name}>
               <Image
                 src={member.image}
                 alt={member.name}
-                width={160}
-                height={160}
+                width={isMobile ? 88 : 160}
+                height={isMobile ? 88 : 160}
               />
               <div className="flex flex-col mt-[24px] text-center">
-                <h3 className="font-semibold">{member.name}</h3>
-                <Name>{member.role}</Name>
+                <Name>{member.name}</Name>
+                <Role>{member.role}</Role>
               </div>
-            </div>
+            </Box>
           ))}
         </div>
       </div>
@@ -129,9 +131,39 @@ const Title = styled.h1`
     font-size: 20px;
     font-weight: 500;
   }
+  @media (max-width: 768px) {
+    font-size: 28px;
+    > p {
+      font-size: 16px;
+    }
+  }
 `;
 
+const TeamHeader = styled.div`
+  @media (max-width: 768px) {
+    height: 280px;
+  }
+`;
+const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 108px;
+  min-height: 156px;
+`;
 const Name = styled.p`
-  color: #828282;
+  font-size: 20px;
+  color: #191919;
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+`;
+
+const Role = styled.p`
   font-size: 14px;
+  color: #828282;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;

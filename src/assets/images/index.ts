@@ -7,6 +7,8 @@ import Review_2_3 from "./review_2-3.png";
 import ASISLetter from "./LetterBackground@3x.png";
 import TOBELetter from "./Letter2@3x.png";
 
+import MobileToBeLetter from "./mobile_tobe_letter.png";
+import MobileAsIsLetter from "./mobile_asis_letter.png";
 export {
   Review_1_1,
   Review_1_2,
@@ -16,4 +18,6 @@ export {
   Review_2_3,
   ASISLetter,
   TOBELetter,
+  MobileToBeLetter,
+  MobileAsIsLetter,
 };

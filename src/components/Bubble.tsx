@@ -1,3 +1,4 @@
+import useWindowSize from "@/hooks/useWindowSize";
 import styled from "styled-components";
 
 interface BubbleProps {
@@ -19,6 +20,7 @@ const Bubble: React.FC<BubbleProps> = ({
   authorColor = "#C79353",
   tailPosition = "left",
 }) => {
+  const { isMobile } = useWindowSize();
   return (
     <BubbleWrapper
       backgroundColor={backgroundColor}
@@ -26,6 +28,7 @@ const Bubble: React.FC<BubbleProps> = ({
       tailPosition={tailPosition}
     >
       <Author authorColor={authorColor}>{author}</Author>
+      {isMobile && <br />}
       {text}
       {emoji && <Emoji>{emoji}</Emoji>}
     </BubbleWrapper>
@@ -34,7 +37,6 @@ const Bubble: React.FC<BubbleProps> = ({
 
 export default Bubble;
 
-// 스타일 정의
 const BubbleWrapper = styled.div<{
   backgroundColor: string;
   textColor: string;
@@ -65,12 +67,29 @@ const BubbleWrapper = styled.div<{
     border-color: ${(props) => props.backgroundColor} transparent transparent
       transparent;
   }
+  @media (max-width: 768px) {
+    font-size: 14px;
+    color: #f5f5f5;
+    background-color: transparent;
+    background-color: transparent;
+    padding: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 0px;
+    ::before {
+      display: none;
+    }
+  }
 `;
 
 const Author = styled.span<{ authorColor: string }>`
   font-weight: bold;
   color: ${(props) => props.authorColor};
   margin-right: 5px;
+  @media (max-width: 768px) {
+    font-size: 14px;
+    color: #a7a7a7;
+  }
 `;
 
 const Emoji = styled.span`

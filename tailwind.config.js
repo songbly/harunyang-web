@@ -29,6 +29,9 @@ module.exports = {
           "100%": { transform: "translateX(-100%)" },
         },
       },
+      screens: {
+        "below-860": { raw: "(max-height: 860px)" },
+      },
     },
   },
 
@@ -38,4 +41,17 @@ module.exports = {
     require("@tailwindcss/line-clamp"),
     require("@tailwindcss/container-queries"),
   ],
+};
+
+module.exports.theme.screens = {
+  xs: "360px",
+  sm: "640px",
+  md: "768px",
+  lg: "1024px",
+  xl: "1080px",
+  "custom-1200": "1200px",
+  "2xl": "1280px",
+  "3xl": "1440px",
+  "custom-1476": "1476px",
+  "custom-1400": "1400px",
 };
