@@ -2,7 +2,11 @@ import styled from "styled-components";
 import Image from "next/image";
 import useWindowSize from "@/hooks/useWindowSize";
 
-const StoreButton = ({ logo, text }) => {
+interface StoreButtonProps {
+  logo: string;
+  text: string;
+}
+const StoreButton = ({ logo, text }: StoreButtonProps) => {
   const { width, height, isMobile } = useWindowSize();
 
   if (width === undefined || height === undefined) {
@@ -10,7 +14,7 @@ const StoreButton = ({ logo, text }) => {
   }
 
   const logoSize = isMobile ? 20 : 36;
-  
+
   return (
     <ButtonWrapper>
       <Image src={logo} width={logoSize} height={logoSize} alt="store logo" />

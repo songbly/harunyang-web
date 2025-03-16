@@ -31,6 +31,7 @@ import {
   TOBELetter,
 } from "../assets/images";
 
+import useWindowSize from "@/hooks/useWindowSize";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useState } from "react";
@@ -41,7 +42,6 @@ import Header from "../components/Header";
 import { ListInfinityAutoScroll } from "../components/ListInfinityAutoScroll";
 import ProgressBar from "../components/ProgressBar";
 import StoreButton from "../components/StoreButton";
-import useWindowSize from "@/hooks/useWindowSize";
 
 const stepContents = [
   {
@@ -76,12 +76,11 @@ const Home = () => {
   const [headerTheme, setHeaderTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
-    // 모든 섹션을 찾아서 data-theme 읽기
-    const allSections = document.querySelectorAll("[data-theme]");
-    allSections.forEach((section) => {
+    const allSectionWraps = document.querySelectorAll("[data-theme]");
+    allSectionWraps.forEach((section) => {
       ScrollTrigger.create({
         trigger: section,
-        start: "top center", // 섹션의 어느 지점에서 테마를 바꿀지
+        start: "top center",
         onEnter: () => {
           const theme = section.getAttribute("data-theme") as "light" | "dark";
           setHeaderTheme(theme);
@@ -93,7 +92,6 @@ const Home = () => {
       });
     });
 
-    // 혹시 레이아웃이 꼬이는 경우 수동 refresh
     ScrollTrigger.refresh();
   }, []);
 
@@ -103,13 +101,13 @@ const Home = () => {
 
   useEffect(() => {
     const sections = document.querySelectorAll("#landing-animate-section");
-    const delaySections = document.querySelectorAll(
+    const delaySectionWraps = document.querySelectorAll(
       "#landing-animate-delay-section"
     );
-    const extraDelaySections = document.querySelectorAll(
+    const extraDelaySectionWraps = document.querySelectorAll(
       "#landing-animate-extra-delay-section"
     );
-    const earlyTriggerSections = document.querySelectorAll(
+    const earlyTriggerSectionWraps = document.querySelectorAll(
       "#landing-animate-early-trigger-section"
     );
 
@@ -126,7 +124,7 @@ const Home = () => {
       });
     });
 
-    delaySections.forEach((section) => {
+    delaySectionWraps.forEach((section) => {
       gsap.from(section, {
         scrollTrigger: {
           trigger: section,
@@ -139,7 +137,7 @@ const Home = () => {
       });
     });
 
-    extraDelaySections.forEach((section) => {
+    extraDelaySectionWraps.forEach((section) => {
       gsap.fromTo(
         section,
         {
@@ -159,7 +157,7 @@ const Home = () => {
       );
     });
 
-    earlyTriggerSections.forEach((section) => {
+    earlyTriggerSectionWraps.forEach((section) => {
       gsap.from(section, {
         scrollTrigger: {
           trigger: section,
@@ -182,7 +180,8 @@ const Home = () => {
       className="w-full flex flex-col items-center overflow-hidden"
     >
       <Header currentTheme={headerTheme} />
-      <Section theme="light">
+      {/* @ts-ignore */}
+      <SectionWrap sectionTheme="light" preview={false}>
         <Box width={0} height={100} />
         <MainText color={"#191919"}>고민이 많은 사람들을 위한</MainText>
         <MainText color={"#191919"}>대화형 일기 서비스</MainText>
@@ -195,8 +194,9 @@ const Home = () => {
           <StoreButton logo={playstore} text={"Google Play"} />
         </ButtonWrapper>
         <Image src={catLetter} width={990} height={990} alt="블랙 로고" />
-      </Section>
-      <Section theme="dark">
+      </SectionWrap>
+      {/* @ts-ignore */}
+      <SectionWrap sectionTheme="dark" preview={false}>
         <Box width={0} height={100} />
         <SubText color="#FF8D23">가볍게 털어놓고 위로 받는 일상</SubText>
         <MainText color={"#F5F5F5"}>
@@ -268,8 +268,9 @@ const Home = () => {
           </RowFlex>
         </ContentWrapper>
         <Box width={0} height={100} />
-      </Section>
-      <Section theme="light">
+      </SectionWrap>
+      {/* @ts-ignore */}
+      <SectionWrap sectionTheme="light" preview={false}>
         <Box width={0} height={100} />
         <SubText color="#FF8D23">하루냥 미리 경험해보기</SubText>
         {sent ? (
@@ -312,9 +313,9 @@ const Home = () => {
           )}
         </LetterContainer>
         <Box width={0} height={isMobile ? 32 : 100} />
-      </Section>
-
-      <Section theme="dark" preview={true}>
+      </SectionWrap>
+      {/* @ts-ignore */}
+      <SectionWrap sectionTheme="dark" preview={true}>
         {!isMobile && <Box width={0} height={100} />}
 
         <BackgroundImage
@@ -340,8 +341,9 @@ const Home = () => {
           </StepContent>
         </StepBox>
         <Box width={0} height={100} />
-      </Section>
-      <Section theme="dark">
+      </SectionWrap>
+      {/* @ts-ignore */}
+      <SectionWrap sectionTheme="dark" preview={false}>
         <Box width={0} height={100} />
         <SubText color="#FF8D23">사용 리뷰</SubText>
         <MainText color={"#F5F5F5"}>이미 $$명이 하루냥과</MainText>
@@ -404,8 +406,9 @@ const Home = () => {
           />
         </div>
         <Box width={0} height={100} />
-      </Section>
-      <Section theme="light">
+      </SectionWrap>
+      {/* @ts-ignore */}
+      <SectionWrap sectionTheme="light" preview={false} as any>
         <Box width={0} height={100} />
         <MainText color={"#191919"}>우리 곧 만나요!</MainText>
         <MainText color={"#191919"}>기다리고 있을게요</MainText>
@@ -440,7 +443,7 @@ const Home = () => {
           />
         </RowFlexMax>
         <Box width={0} height={100} />
-      </Section>
+      </SectionWrap>
       <Footer />
     </div>
   );
@@ -448,23 +451,26 @@ const Home = () => {
 
 export default Home;
 
-export const Box = styled.div<{ width: number; height: number }>`
+const Box = styled.div<{ width: number; height: number }>`
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
 `;
 
-const Section = styled.div.attrs<{
-  theme: "light" | "dark";
-  preview?: boolean;
-}>((props) => ({
-  "data-theme": props.theme,
-}))<{ theme: "light" | "dark"; preview?: boolean }>`
+interface SectionWrapProps extends React.HTMLAttributes<HTMLDivElement> {
+  sectionTheme: "light" | "dark";
+  preview: boolean;
+}
+
+// @ts-ignore
+const SectionWrap = styled.div.attrs<SectionWrapProps>((props) => ({
+  "data-theme": props.sectionTheme,
+}))<SectionWrapProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   background-color: ${(props) =>
-    props.theme === "light" ? "#FFF" : "#191919"};
+    props.sectionTheme === "light" ? "#FFF" : "#191919"};
 
   ${(props) =>
     props.preview &&
