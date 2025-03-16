@@ -1,18 +1,16 @@
-// Header.tsx
-import Link from "next/link";
+import useWindowSize from "@/hooks/useWindowSize";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import styled from "styled-components";
 import {
   hamburgerBlack,
   hamburgerWhite,
   harunyangCatLogo,
   harunyangCatLogoBlack,
   harunyangCatLogoWhite,
-  logoBlack,
 } from "../assets";
-import useWindowSize from "@/hooks/useWindowSize";
-import styled from "styled-components";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
 
 interface HeaderProps {
   currentTheme: "light" | "dark";
