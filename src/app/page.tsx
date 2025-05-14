@@ -375,7 +375,7 @@ const Home = () => {
               />,
             ]}
             speed={80000}
-            itemClassName="w-max sm:h-[240px] shrink-0 xl:pr-12 sm:pr-6 pr-4 box-content flex items-center justify-center"
+            itemClassName="w-max shrink-0 pr-4 box-content flex items-center justify-center"
           />
           <ListInfinityAutoScroll
             items={[
