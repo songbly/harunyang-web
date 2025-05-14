@@ -44,7 +44,7 @@ import ProgressBar from "../components/ProgressBar";
 import StoreButton from "../components/StoreButton";
 import Pagination from "@/components/Pagination";
 
-export const stepContents = [
+const stepContents = [
   {
     title: "오늘의 감정 기록",
     text: "매일 내 감정을 체크하고 기록해요. 감정 관리법에서 가장 중요한 것은 스스로 물어보고 자신의 감정을 기록하는 것이에요.",
