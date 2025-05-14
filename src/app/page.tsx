@@ -356,22 +356,22 @@ const Home = () => {
                 key="Review_1_1"
                 src={Review_1_1}
                 alt={""}
-                width={2280}
-                height={isMobile ? 120 : 240}
+                width={isMobile ? 1816: 2280}
+                height={isMobile ? 164 : 240}
               />,
               <Image
                 key="Review_1_2"
                 src={Review_1_2}
                 alt={""}
-                width={2280}
-                height={isMobile ? 120 : 240}
+                width={isMobile ? 1816: 2280}
+                height={isMobile ? 164 : 240}
               />,
               <Image
                 key="Review_1_3"
                 src={Review_1_3}
                 alt={""}
-                width={2280}
-                height={isMobile ? 120 : 240}
+                width={isMobile ? 1816: 2280}
+                height={isMobile ? 164 : 240}
               />,
             ]}
             speed={80000}
@@ -383,22 +383,22 @@ const Home = () => {
                 key="Review_2_1"
                 src={Review_2_1}
                 alt={""}
-                width={2280}
-                height={isMobile ? 120 : 240}
+                width={isMobile ? 1816: 2280}
+                height={isMobile ? 164 : 240}
               />,
               <Image
                 key="Review_2_2"
                 src={Review_2_2}
                 alt={""}
-                width={2280}
-                height={isMobile ? 120 : 240}
+                width={isMobile ? 1816: 2280}
+                height={isMobile ? 164 : 240}
               />,
               <Image
                 key="Review_2_3"
                 src={Review_2_3}
                 alt={""}
-                width={2280}
-                height={isMobile ? 120 : 240}
+                width={isMobile ? 1816: 2280}
+                height={isMobile ? 164 : 240}
               />,
             ]}
             speed={80000}
