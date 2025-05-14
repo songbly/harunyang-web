@@ -1,0 +1,26 @@
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-pagination {
+  position: absolute;
+  bottom: -24px;
+}
+
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 12px;
+  background: #3D3D3D;
+  opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background: #FF8D23;
+}

@@ -42,26 +42,31 @@ import Header from "../components/Header";
 import { ListInfinityAutoScroll } from "../components/ListInfinityAutoScroll";
 import ProgressBar from "../components/ProgressBar";
 import StoreButton from "../components/StoreButton";
+import Pagination from "@/components/Pagination";
 
-const stepContents = [
+export const stepContents = [
   {
     title: "오늘의 감정 기록",
     text: "매일 내 감정을 체크하고 기록해요. 감정 관리법에서 가장 중요한 것은 스스로 물어보고 자신의 감정을 기록하는 것이에요.",
+    mobile_text: '매일 내 감정을 체크하고 기록해요.',
     img: step1,
   },
   {
     title: "오늘의 날씨 기록",
     text: "감정에 따라 달라보이는 날씨. 오늘의 날씨는 어땠나요?",
+    mobile_text: '감정에 따라 달라보이는 날씨. 오늘의 날씨는 어땠나요?',
     img: step2,
   },
   {
     title: "일기 쓰기",
     text: "오늘 하루 일들을 하루냥에게 가볍게 털어놓으세요. 언제나 당신 이야기를 들어줄 준비가 되어 있어요.",
+    mobile_text: "오늘 하루 일들을 하루냥에게 가볍게 털어놓으세요.",
     img: step3,
   },
   {
     title: "고양이 하루냥의 편지",
     text: "나만의 친구 하루냥의 따스한 위로와 조언으로 하루를 기분 좋게 마무리 해보세요.",
+    mobile_text: "나만의 친구 하루냥의 따스한 위로와 조언으로 하루를 기분 좋게 마무리 해보세요.",
     img: step4,
   },
 ];
@@ -317,7 +322,6 @@ const Home = () => {
       {/* @ts-ignore */}
       <SectionWrap $sectionTheme="dark" $preview={true}>
         {!isMobile && <Box width={0} height={100} />}
-
         <BackgroundImage
           src={appPreviewBackground}
           width={990}
@@ -332,14 +336,27 @@ const Home = () => {
             alt="step1"
           />
           <StepContent>
-            <ProgressBar
-              currentStep={currentIndex}
-              onStepClick={handleStepClick}
-            />
+            {!isMobile && (
+              <ProgressBar
+                currentStep={currentIndex}
+                onStepClick={handleStepClick}
+              />
+            )}
             <StepTitle>{stepContents[currentIndex].title}</StepTitle>
-            <StepText>{stepContents[currentIndex].text}</StepText>
+            <StepText>{isMobile ? stepContents[currentIndex].mobile_text : stepContents[currentIndex].text}</StepText>
           </StepContent>
+          {isMobile && (
+
+          <PaginationBox>
+            <Pagination 
+            currentStep={currentIndex}
+            onStepClick={handleStepClick}/>
+          </PaginationBox>
+          )}
+          
+          
         </StepBox>
+        
         <Box width={0} height={100} />
       </SectionWrap>
       {/* @ts-ignore */}
@@ -417,6 +434,7 @@ const Home = () => {
           <StoreButton logo={playstore} text={"Google Play"} />
         </ButtonWrapper>
         <RowFlexMax>
+          <div className="flex flex-row">
           <Image
             src={catYellow}
             width={isMobile ? 120 : 320}
@@ -429,6 +447,8 @@ const Home = () => {
             height={isMobile ? 120 : 320}
             alt="빨강 고양이"
           />
+          </div>
+          <div className="flex flex-row">
           <Image
             src={catSkyblue}
             width={isMobile ? 120 : 320}
@@ -441,6 +461,8 @@ const Home = () => {
             height={isMobile ? 120 : 320}
             alt="초록 고양이"
           />
+          </div>
+          
         </RowFlexMax>
         <Box width={0} height={100} />
       </SectionWrap>
@@ -477,7 +499,8 @@ const SectionWrap = styled.div.attrs<SectionWrapProps>((props) => ({
     css`
       position: relative;
       @media (max-width: 768px) {
-        height: 1200px;
+        height: 912px;
+        padding-bottom: 100px;
       }
     `}
 `;
@@ -557,8 +580,9 @@ const RowFlexMax = styled.div`
   max-width: 1440px;
   width: 100%;
   @media (max-width: 768px) {
+    flex-direction: column;
     margin-top: 60px;
-    flex-wrap: wrap;
+    display: flex; 
     gap: 16px;
   }
 `;
@@ -623,6 +647,7 @@ const StepTitle = styled.p`
     width: 100%;
     text-align: center;
     margin-top: 40px;
+    padding-top: 100px;
   }
 `;
 
@@ -639,3 +664,8 @@ const StepText = styled.p`
     margin-bottom: 60px;
   }
 `;
+
+const PaginationBox = styled.div`
+  position: absolute;
+  bottom: -50px;  
+`
